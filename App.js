@@ -4,11 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   SafeAreaView,
   Button,
   Alert,
   Image,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import Prompt from "react-native-prompt-crossplatform";
 
@@ -43,30 +45,34 @@ export default function App() {
     setVisibleImg(false);
   };
 
+  const platformOs = Platform.OS;
+
   return (
-    <View style={styles.container}>
-      <Text>Hello World!</Text>
-      <Text numberOfLines={1} style={styles.text} onPress={handleTextPress}>
-        Привет {"\n"}Привет
+    <ScrollView style={styles.container}>
+      <Text style={styles.text} onPress={handleTextPress}>
+        React Native app on platform {platformOs}
       </Text>
-      <Button
-        title="Press me 1"
-        color="red"
-        onPress={handleButtonPress1}
-        style={styles.btn}
-      />
-      <Button
-        title="Press me 2"
-        color="green"
-        onPress={handleButtonPress2}
-        style={styles.btn}
-      />
-      <Button
-        title="Press me 3"
-        color="blue"
-        onPress={handleButtonPress3}
-        style={styles.btn}
-      />
+
+      <View style={stylesBtn.container}>
+        <Button
+          title="Alert"
+          color="red"
+          onPress={handleButtonPress1}
+          style={styles.btn}
+        />
+        <Button
+          title="Prompt"
+          color="green"
+          onPress={handleButtonPress2}
+          style={styles.btn}
+        />
+        <Button
+          title="Image"
+          color="blue"
+          onPress={handleButtonPress3}
+          style={styles.btn}
+        />
+      </View>
       <Prompt
         title="My Prompt"
         placeholder="Enter Some Text"
@@ -93,12 +99,12 @@ export default function App() {
       <Image
         source={{
           uri: "https://itproger.com/img/courses/1615637098.jpg",
-          width: 300,
+          width: "100%",
           height: 250,
         }}
       />
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -112,9 +118,19 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "red",
-    // padding: '10px'
+    padding: 10,
   },
   btn: {
     marginTop: 20,
+  },
+});
+
+const stylesBtn = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+    backgroundColor: Platform.OS === "android" ? "#ff9" : "#ff0",
   },
 });
